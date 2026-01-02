@@ -1,0 +1,7 @@
+transformers>=4.30.0
+sentence-transformers>=2.2.2
+faiss-cpu
+rank_bm25
+pyyaml
+tqdm
+torch>=1.10

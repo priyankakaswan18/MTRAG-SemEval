@@ -1,0 +1,32 @@
+# Configuration for mt_rag_solver
+models:
+  # Provide either a local path to a model directory or a Hugging Face model id.
+  # Priority: if the path exists on disk, the code will load local weights first.
+  # Chosen open-source models that will be automatically downloaded from Hugging Face
+  # Small-to-medium models to allow local runs; replace with larger models if GPU memory permits.
+  # For fast local verification we use smaller open models. Swap to larger models for production.
+  rewrite: google/flan-t5-small
+  generator: google/flan-t5-small
+  dense: sentence-transformers/all-MiniLM-L6-v2
+  reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+  nli: microsoft/deberta-v3-small-mnli
+
+retrieval:
+  top_k: 100
+  rrf_c: 60
+  select_k_for_generation: 5
+  # persistent index files (optional). If set, Retriever will try to load these.
+  faiss_index_path: mt-rag-solver/data/faiss.index
+  embeddings_path: mt-rag-solver/data/embeddings.npy
+  mapping_path: mt-rag-solver/data/id_mapping.json
+
+runtime:
+  seed: 42
+  device: auto
+
+data_sources:
+  # To enable automatic corpus download, set `corpora_archive_url` to an archive (zip/tar) URL
+  # that contains the `corpora/` folder structure expected by the benchmark. If empty,
+  # no automatic download will be attempted and the pipeline will require the local data.
+  # Default: GitHub archive of the official mt-rag-benchmark repository (contains `corpora/`)
+  corpora_archive_url: "https://github.com/IBM/mt-rag-benchmark/archive/refs/heads/main.zip"
